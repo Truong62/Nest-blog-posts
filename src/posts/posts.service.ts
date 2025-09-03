@@ -6,7 +6,7 @@ import { createPostType } from 'src/types/posts';
 export class PostsService {
   constructor(private prismaService: PrismaService) {}
 
-  getPosts(): any {
+  getPosts() {
     return this.prismaService.posts.findMany();
   }
 
