@@ -40,3 +40,10 @@ export class RegisterResponseDTO {
     Object.assign(this, data);
   }
 }
+
+export class RefreshTokenBodyDTO {
+  @IsString()
+  refreshToken: string;
+}
+
+export class RefreshTokenResponseDTO extends LoginResponseDTO {}

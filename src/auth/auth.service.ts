@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException, UnprocessableEntityException } from 
 import { HashingService } from 'src/shared/hashing.service';
 import { PrismaService } from 'src/shared/prisma.service';
 import { createUserType } from 'src/types/auth';
-import { LoginBodyDTO, RegisterResponseDTO } from './auth.dto';
+import { LoginBodyDTO, RefreshTokenBodyDTO, RegisterResponseDTO } from './auth.dto';
 import { TokenService } from 'src/shared/token.service';
 
 @Injectable()
@@ -72,5 +72,38 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async refreshToken(body: RefreshTokenBodyDTO) {
+    try {
+      const token = await this.tokenService.verifyRefreshToken(body.refreshToken);
+
+      const existingToken = await this.prismaService.refetchToken.findUnique({
+        where: {
+          token: body.refreshToken,
+        },
+      });
+
+      if (!existingToken) {
+        throw new UnprocessableEntityException({
+          field: 'refreshToken',
+          error: 'Refresh token not found or already expired',
+        });
+      }
+
+      await this.prismaService.refetchToken.delete({
+        where: {
+          token: body.refreshToken,
+        },
+      });
+
+      return this.generateTokens({ userId: token.userId });
+    } catch (error) {
+      console.log(error);
+      throw new UnprocessableEntityException({
+        filed: 'refreshToken',
+        error: error.message,
+      });
+    }
   }
 }
