@@ -10,6 +10,7 @@ export class TokenService {
     return this.jwtService.sign(payload, {
       secret: envConfig.ACCESS_TOKEN_SECRET,
       expiresIn: envConfig.ACCESS_TOKEN_EXPIRES_IN,
+      algorithm: 'HS256',
     });
   }
 
@@ -17,6 +18,7 @@ export class TokenService {
     return this.jwtService.sign(payload, {
       secret: envConfig.REFRESH_TOKEN_SECRET,
       expiresIn: envConfig.REFRESH_TOKEN_EXPIRES_IN,
+      algorithm: 'HS256',
     });
   }
 
