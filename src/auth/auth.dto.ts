@@ -1,5 +1,6 @@
 import { IsDate, IsNumber, IsString } from 'class-validator';
 import { Exclude } from 'class-transformer';
+import { Match } from 'src/shared/decorators/custom-validator.decorator';
 
 export class LoginBodyDTO {
   @IsString()
@@ -22,6 +23,8 @@ export class LoginResponseDTO {
 export class RegisterDTO extends LoginBodyDTO {
   @IsString()
   name: string;
+
+  @Match('password', { message: 'password and confirm password must be the same' })
   @IsString()
   confirmPassword: string;
 }
