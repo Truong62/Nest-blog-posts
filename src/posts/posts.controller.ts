@@ -1,6 +1,10 @@
 import { Body, Controller, Put, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import type { createPostType } from 'src/types/posts';
+import { Auth } from 'src/shared/decorators/auth.decorator';
+import { AuthType, ConditionGuard } from 'src/shared/constants/auth.constants';
+import { ApiKeyGuard } from 'src/shared/guards/api-key.guard';
+import { AccessTokenGuard } from 'src/shared/guards/access-token.guard';
 
 @Controller('posts')
 export class PostsController {
