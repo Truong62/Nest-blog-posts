@@ -3,6 +3,7 @@ import { PostsService } from './posts.service';
 import type { createPostType } from 'src/types/posts';
 import { Auth } from 'src/shared/decorators/auth.decorator';
 import { AuthType, ConditionGuard } from 'src/shared/constants/auth.constants';
+import { ActiveUser } from 'src/shared/decorators/active-user.decorator';
 
 @Controller('posts')
 export class PostsController {
@@ -15,8 +16,11 @@ export class PostsController {
   }
 
   @Post()
-  createPost(@Body() body: createPostType) {
-    return this.postService.createPost(body);
+  @Auth([AuthType.Bearer], { condition: ConditionGuard.And })
+  createPost(@Body() body: createPostType, @ActiveUser() user) {
+    console.log(user);
+
+    return this.postService.createPost(body, user.userId);
   }
 
   @Put(':id')

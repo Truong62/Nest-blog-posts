@@ -10,13 +10,12 @@ export class PostsService {
     return this.prismaService.posts.findMany();
   }
 
-  createPost(body: createPostType) {
-    console.log('body: >>>>>>>>', body);
+  createPost(body: createPostType, userId: number) {
     return this.prismaService.posts.create({
       data: {
         title: body.title,
         content: body.content,
-        authorId: 1,
+        authorId: userId,
       },
     });
   }
