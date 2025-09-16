@@ -50,3 +50,14 @@ export class RefreshTokenBodyDTO {
 }
 
 export class RefreshTokenResponseDTO extends LoginResponseDTO {}
+
+export class LogoutBodyDTO extends RefreshTokenBodyDTO {}
+
+export class LogoutResponseDTO {
+  @IsString()
+  message: string;
+
+  constructor(data: LogoutResponseDTO) {
+    Object.assign(this, data);
+  }
+}

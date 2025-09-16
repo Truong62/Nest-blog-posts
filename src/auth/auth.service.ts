@@ -106,4 +106,47 @@ export class AuthService {
       });
     }
   }
+
+  async logout(body: RefreshTokenBodyDTO) {
+    try {
+      const [decodeRefreshToken, existingToken] = await Promise.all([
+        this.tokenService.verifyRefreshToken(body.refreshToken),
+        this.prismaService.refetchToken.findUnique({
+          where: {
+            token: body.refreshToken,
+          },
+        }),
+      ]);
+
+      console.log(existingToken);
+      console.log(decodeRefreshToken);
+
+      if (!existingToken) {
+        throw new UnprocessableEntityException({
+          field: 'refreshToken',
+          error: 'Refresh token not found or already expired',
+        });
+      }
+
+      await this.prismaService.refetchToken.delete({
+        where: {
+          token: body.refreshToken,
+        },
+      });
+
+      return { message: 'Logout successful' };
+    } catch (error) {
+      console.log(error);
+      throw new UnprocessableEntityException({
+        filed: 'refreshToken',
+        error: error.message,
+      });
+    }
+  }
+
+  async logoutAll(userId: number) {
+    await this.prismaService.refetchToken.deleteMany({
+      where: { userId },
+    });
+  }
 }
