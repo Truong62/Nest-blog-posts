@@ -8,6 +8,7 @@ export class PostsService {
 
   async getPosts(): Promise<PostModelDTO[]> {
     const records = await this.prismaService.posts.findMany();
+
     return mapPostsToDTO(records);
   }
 

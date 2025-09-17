@@ -4,11 +4,5 @@
   "printWidth": 120,
   "endOfLine": "lf",
   "bracketSpacing": true,
-  "semi": true,
-  "[yaml]": {
-    "editor.autoIndent": "keep",
-    "editor.tabSize": 2,
-    "prettier.tabWidth": 2,
-    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
-  }
+  "semi": true
 }
