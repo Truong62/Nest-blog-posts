@@ -1,0 +1,35 @@
+node_modules
+npm-debug.log
+yarn.lock
+package-lock.json
+.pnpm-debug.log
+.cache
+
+# Build outputs
+dist
+out
+build
+
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+*.swp
+
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose*.yml
+.dockerignore
+
+# Test & docs
+coverage
+*.md
