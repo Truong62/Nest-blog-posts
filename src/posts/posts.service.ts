@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/shared/prisma.service';
 import { CreatePostDTO, UpdatePostDTO, PostModelDTO, mapPostsToDTO } from 'src/shared/models/post.model';
+import { setTimeout } from 'timers/promises';
 
 @Injectable()
 export class PostsService {
@@ -8,6 +9,8 @@ export class PostsService {
 
   async getPosts(): Promise<PostModelDTO[]> {
     const records = await this.prismaService.posts.findMany();
+
+    await setTimeout(10000);
 
     return mapPostsToDTO(records);
   }
